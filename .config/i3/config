@@ -23,7 +23,7 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango: Cantarell Regular 10
+font pango: JetBrains Mono 10
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -193,13 +193,13 @@ bindsym $mod+d exec --no-startup-id ~/.config/i3/scripts/powermenu
 #bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to update i3)
 bindsym $mod+Shift+r restart
 
 # keybinding in fancy rofi (automated):
-bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
+# bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
 # alternative
 # keybinding list in editor:
 # bindsym $mod+F1 exec --no-startup-id xed ~/.config/i3/keybindings
@@ -284,7 +284,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+b exec --no-startup-id /usr/bin/librewolf
+bindsym $mod+b exec --no-startup-id librewolf
 bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+s exec --no-startup-id thunar
 
@@ -297,13 +297,13 @@ bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
 set $ws4 "4:"
 set $ws5 "5:"
 set $ws6 "6:"
-set $ws7 "7:"
+set $ws7 "7:"
 #set $ws8 "8"
 #set $ws9 "9"
 #set $ws10 "10"
@@ -318,21 +318,32 @@ set $ws7 "7:"
 #workspace $ws5 output HDMI-0
 
 # bind program to workspace and focus to them on startup:
-assign [class="Alacritty"] $ws1
-assign [class="(?i)firefox"] $ws2
+assign [class="(?i)librewolf"] $ws1
+assign [class="Anki"] $ws1
+assign [class="Alacritty"] $ws2
+assign [class="mpv"] $ws3
+assign [class="elisa"] $ws3
+assign [class="Kodi"] $ws3
+assign [class="kodi"] $ws3
 assign [class="discord"] $ws4
+assign [class="ts3client_linux_amd64"] $ws4
+assign [class="vesktop"] $ws4
 assign [class="steam"] $ws5
 assign [class="lutris"] $ws5
 assign [class="jetbrains-studio"] $ws6
-assign [class="mpv"] $ws7
+assign [class="SonoBus"] $ws7
 
 # automatic set focus new window if it opens on another workspace than the current:
 for_window [class=Alacritty] focus
-for_window [class=(?i)firefox] focus
-for_window [class=(?i)discord] focus
-for_window [class=(?i)steam] focus
-for_window [class=(?i)jetbrains-studio] focus
+# for_window [class=(?i)librewolf] focus
+# for_window [class=(?i)discord] focus
+# for_window [class=(?i)ts3client_linux_amd64] focus
+# for_window [class=(?i)vesktop] focus
+# for_window [class=(?i)steam] focus
+# for_window [class=(?i)jetbrains-studio] focus
 for_window [class=(?i)mpv] focus
+for_window [class=(?i)Kodi] focus
+
 for_window [title="Picture-in-Picture"] sticky enable
 
 ##############
@@ -377,7 +388,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # if enabled you should comment welcome app.
 # https://github.com/jceb/dex
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
-exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id dex --autostart --environment i3
 
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
@@ -429,7 +440,7 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 #exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
 # may need to run dbus-launch explicitly: 
 #exec --no-startup-id dbus-launch /usr/bin/dunst
-exec --no-startup-id /usr/bin/dunst
+# exec --no-startup-id /usr/bin/dunst # This lil fella breaks when we use xfce4
 # alternative if you installed aside with XFCE4:
 # exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -537,11 +548,22 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
-bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+# bindsym $mod+space exec --no-startup-id GTK_THEME=Orchis-Dark-Compact && rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+bindsym $mod+space exec --no-startup-id source $HOME/.xprofile && rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+
+bindsym exec --no-startup-id rofi -show window -show-icons
+
+# TODO: make this a mouse shortcut and make the rofi window show previews like the mission control on MacOS
+bindsym mod1+Tab exec --no-startup-id rofi -show window -show-icons -config $HOME/.config/rofi/rofidmenu.rasi
+# bindsym $mod+space exec --no-startup-id rofi -show window -show-icons
 
 # bindsym $mod+d exec --no-startup-id rofi -show drun -run-shell-command '{terminal} -e $SHELL -ic "{cmd} && read"'
 
 bindsym $mod+shift+s exec maim -s | xclip -selection clipboard -t image/png
+
+bindsym $mod+shift+w exec maim ~/Pictures/Screenshots/$(date +%s).png
+
+bindsym $mod+shift+c exec --no-startup-id ocr
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun config ~/.config/rofi/rofidmenu.rasi
 
@@ -557,4 +579,19 @@ exec --no-startup-id greenclip daemon>/dev/null
 # run xbanish (disable mouse cursor when typing)
 exec --no-startup-id xbanish
 
+exec --no-startup-id transmission-daemon --logfile ~/.local/share/transmission-daemon/transmission.log -a 192.168.1.*
+
+exec --no-startup-id nitrogen --restore
+
+# run vnc server to connect remotely
+exec --no-startup-id x11vnc -display :0 -geometry 1920x1080 -forever -loop -noxdamage -repeat -bg
+
+exec --no-startup-id sudo systemctl start docker
+
 bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -config ~/.config/rofi/rofidmenu.rasi
+
+# run kodi media server
+# exec --no-startup-id kodi
+
+# exec --no-startup-id sonobus --load-setup $HOME/Documents/sonobus/tablet_speaker &
+

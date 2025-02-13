@@ -3,9 +3,7 @@
  * Maintainer: joekamprad [joekamprad //a_t// endeavouros.com]
  *******************************************************/
 configuration {
-    font:                "Cantarell Regular 10";
     show-icons:          false;
-    icon-theme:          "Qogir";
     display-drun:        "KeyHint";
     drun-display-format: "{name}";
     scroll-method:       0;
@@ -15,6 +13,7 @@ configuration {
     sidebar-mode:        false;
 }
 
+@import "~/.config/rofi/config.rasi"
 @import "~/.config/rofi/arc_dark_transparent_colors.rasi"
 
 window {

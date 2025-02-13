@@ -1,14 +1,3 @@
-export PATH=$PATH:$HOME/bin:/usr/local/bin:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin
-export ZSH="$HOME/.oh-my-zsh"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export FIREFOX=$HOME/.mozilla/firefox/jhteeepy.default-release
-export EDITOR=vim
-
-# Directories and shi
-export GH=https://github.com/tuzgen
-
 ZSH_THEME="af-magic"
 
 CASE_SENSITIVE="false"
@@ -25,25 +14,45 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# use defaults
-# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source /usr/share/fzf/key-bindings.zsh
-# source /usr/share/fzf/completion.zsh
-
 # per user configuration (cannot modify /usr/share on MacOS)
-source $HOME/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.local/share/fzf/key-bindings.zsh
-source $HOME/.local/share/fzf/completion.zsh
 
-# User configuration
+# Check if the zsh-autosuggestions file exists before sourcing
+if [ -f "$HOME/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$HOME/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Check if the fzf key-bindings file exists before sourcing
+if [ -f "$HOME/.local/share/fzf/key-bindings.zsh" ]; then
+  source "$HOME/.local/share/fzf/key-bindings.zsh"
+fi
+
+# Check if the fzf completion file exists before sourcing
+if [ -f "$HOME/.local/share/fzf/completion.zsh" ]; then
+  source "$HOME/.local/share/fzf/completion.zsh"
+fi
 
 # Aliases
-
-function cdf {
-	cd $(find $HOME/Development -maxdepth 1 -type d | fzf)
-}
-alias cdf=cdf
 alias notes="nvim $HOME/Notes"
 alias torrents="transmission-daemon --logfile ~/.local/log/transmission.log"
+alias music="ncmpcpp"
+alias bi="beet import -t"
+
+alias r="source $HOME/.zprofile; source $HOME/.zshrc"
+alias p="sudo pacman"
+
+alias wok="cd $HOME/Development/jumpcloud-workstation/ && bin/wok"
+
+alias ports="sudo lsof -nP -iTCP -sTCP:LISTEN"
+alias k="kubectl"
+
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
+alias tr="transmission-remote tuzgen-pc:9091 -ne"
+alias trl="transmission-remote tuzgen-pc:9091 -ne -l"
+alias trst="transmission-remote tuzgen-pc:9091 -ne -st"
+
+# TODO: make watch command compatible with zsh aliases
+alias watch="watch -n 0.5 -d "
+
+# autocompletion
+source <(kubectl completion zsh)

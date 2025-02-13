@@ -104,6 +104,58 @@ if [[ "${FZF_ALT_C_COMMAND-x}" != "" ]]; then
   bindkey -M viins '\ec' fzf-cd-widget
 fi
 
+# CTRL-F - cd into the selected directory
+fzf-cd-find-widget() {
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  local dir="$(
+    FZF_DEFAULT_COMMAND="find $HOME -maxdepth 5 -type d 2> /dev/null" \
+    FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse --scheme=path" "${FZF_CTRL_F_OPTS-} +m") \
+    FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd) < /dev/tty)"
+  if [[ -z "$dir" ]]; then
+    zle redisplay
+    return 0
+  fi
+  zle push-line # Clear buffer. Auto-restored on next prompt.
+  BUFFER="builtin cd -- ${(q)dir:a}"
+  zle accept-line
+  local ret=$?
+  unset dir # ensure this doesn't end up appearing in prompt expansion
+  zle reset-prompt
+  return $ret
+}
+if [[ "${FZF_CTRL_F_COMMAND-x}" != "" ]]; then
+  zle     -N             fzf-cd-find-widget
+  bindkey -M emacs '^F' fzf-cd-find-widget
+  bindkey -M vicmd '^F' fzf-cd-find-widget
+  bindkey -M viins '^F' fzf-cd-find-widget
+fi
+
+# CTRL-O - [O]pen project
+fzf-open-project-widget() {
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  local dir="$(
+    FZF_DEFAULT_COMMAND="find $HOME/Development -maxdepth 1 -type d 2> /dev/null" \
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse --scheme=path" "${FZF_CTRL_O_OPTS-} +m") \
+    FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd) < /dev/tty)"
+  if [[ -z "$dir" ]]; then
+    zle redisplay
+    return 0
+  fi
+  zle push-line # Clear buffer. Auto-restored on next prompt.
+  BUFFER="builtin cd -- ${(q)dir:a}"
+  zle accept-line
+  local ret=$?
+  unset dir # ensure this doesn't end up appearing in prompt expansion
+  zle reset-prompt
+  return $ret
+}
+if [[ "${FZF_CTRL_O_COMMAND-x}" != "" ]]; then
+  zle     -N             fzf-open-project-widget
+  bindkey -M emacs '^O' fzf-open-project-widget
+  bindkey -M vicmd '^O' fzf-open-project-widget
+  bindkey -M viins '^O' fzf-open-project-widget
+fi
+
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
   local selected num
