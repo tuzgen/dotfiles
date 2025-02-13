@@ -23,8 +23,6 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango: JetBrains Mono 10
-
 # set the mod key to the winkey:
 set $mod Mod4
 
@@ -34,14 +32,6 @@ set $mod Mod4
 
 # default i3 tiling mode:
 workspace_layout default
-
-# i3 stacking layout:
-# Each window will be fullscreen and tabbed top to bottom.
-#workspace_layout stacking
-
-# i3 tabbed layout:
-# Each new window will open fullscreen as a tab (left to right)
-#workspace_layout tabbed
 
 ##############################
 # extra options for windows: #
@@ -54,10 +44,10 @@ workspace_layout default
 # hide_edge_borders both
 
 # Set inner/outer gaps
-#gaps inner 6
-#gaps outer 3
+gaps inner 2
+gaps outer 0
 
-default_border pixel 0
+default_border pixel 1
 default_floating_border pixel 0
 
 # show window title bars (not officially supported with i3gaps)
@@ -346,40 +336,18 @@ for_window [class=(?i)Kodi] focus
 
 for_window [title="Picture-in-Picture"] sticky enable
 
-##############
-# compositor #
-##############
-
-# transparency
-# uncomment one of them to be used
-# options could need changes, related to used GPU and drivers.
-# to find the right setting consult the archwiki or ask at the forum.
-#
-# xcompmgr: https://wiki.archlinux.org/title/Xcompmgr
-# manpage: https://man.archlinux.org/man/xcompmgr.1.en
-# install xcompmgr package to use it (yay -S xcompmgr)
-#exec --no-startup-id xcompmgr -C -n &
-# or an more specialized config like this:
-#exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
-#
-# or:
-#
-# picom: https://wiki.archlinux.org/title/Picom
-# manpage: https://man.archlinux.org/man/picom.1.en
-# The default configuration is available in /etc/xdg/picom.conf 
-# For modifications, it can be copied to ~/.config/picom/picom.conf or ~/.config/picom.conf
-# install picom package (yay -S picom)
-# start using default config 
-#exec_always --no-startup-id picom -b
-#
-# for custom config:
-#exec_always --no-startup-id picom --config  ~/.config/picom.conf
-
 #############################################
 # autostart applications/services on login: #
 #############################################
 
+## rofi bindings to manage clipboard (install rofi-greenclip from the AUR)
+exec --no-startup-id greenclip daemon>/dev/null
+
+# run xbanish (disable mouse cursor when typing)
+exec --no-startup-id xbanish
+
 #get auth work with polkit-gnome
+
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # dex execute .desktop files + apps using /etc/xdg/autostart.
@@ -390,9 +358,6 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 # exec --no-startup-id dex --autostart --environment i3
 
-# start welcome app
-#exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
-
 # num lock activated
 #exec --no-startup-id numlockx on
 
@@ -400,11 +365,14 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id setxkbmap -layout 'us,tr' -option 'grp:alt_caps_toggle'
 exec --no-startup-id setxkbmap -layout 'us,tr' -option 'grp:alt_space_toggle' -option "ctrl:nocaps" 
 
+exec $HOME/.local/bin/keyboard-config.sh
+exec $HOME/.local/bin/mouse-config.sh
+
 # increase keyboard key repeat interval
-exec --no-startup-id xset r rate 200 40
+# exec --no-startup-id xset r rate 200 40
 
 # disable mouse acceleratation
-exec --no-startup-id xinput --set-prop 9 'libinput Accel Profile Enabled' 0, 1
+# exec --no-startup-id xinput --set-prop 9 'libinput Accel Profile Enabled' 0, 1
 
 # exec --no-startup-id setxkbmap -layout 'us,tr' -option "ctrl:nocaps" 
 
@@ -449,11 +417,6 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 # `yay -S autotiling ;) (it is in AUR)
 #exec_always --no-startup-id autotiling
 
-# Autostart apps as you like
-#exec --no-startup-id sleep 2 && xfce4-termina
-#exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
-#exec --no-startup-id sleep 3 && thunar
-
 ###############
 # system tray #
 ###############
@@ -496,60 +459,11 @@ for_window [window_role="About"] floating enable
 # set position of floating window
 #for_window [class=".*"] move position center
 
-######################################
-# color settings for bar and windows #
-######################################
-
-# Define colors variables:
-set $darkbluetrans	#08052be6
-set $darkblue		#08052b
-set $lightblue		#5294e2
-set $urgentred		#e53935
-set $white		#ffffff
-set $black		#000000
-set $purple		#e345ff
-set $darkgrey		#121212
-set $grey		#b0b5bd
-set $mediumgrey		#8b8b8b
-set $yellowbrown	#e1b700
-
-# define colors for windows:
-#class		        	border		bground		text		indicator	child_border
-client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$mediumgrey
-client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
-client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
-client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
-
-############################################
-# bar settings (input comes from i3blocks) #
-############################################
-
-# bar {
-# 	font pango: Cantarell Regular 8
-# 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
-# 	position bottom
-# 	tray_padding 0
-#
-# 	strip_workspace_numbers yes
-# 	colors {
-# 			separator          $purple
-# 			background         $darkgrey
-# 			statusline         $white
-# 			focused_workspace	$mediumgrey			$grey		$darkgrey	$purple
-# 			active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-# 			inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-# 			urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-# 	}
-# }
-
 #####################################
 # Application menu handled by rofi: #
 #####################################
-
-## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
-
-# bindsym $mod+space exec --no-startup-id GTK_THEME=Orchis-Dark-Compact && rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
 bindsym $mod+space exec --no-startup-id source $HOME/.xprofile && rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -config ~/.config/rofi/rofidmenu.rasi
 
 bindsym exec --no-startup-id rofi -show window -show-icons
 
@@ -560,18 +474,9 @@ bindsym mod1+Tab exec --no-startup-id rofi -show window -show-icons -config $HOM
 # bindsym $mod+d exec --no-startup-id rofi -show drun -run-shell-command '{terminal} -e $SHELL -ic "{cmd} && read"'
 
 bindsym $mod+shift+s exec maim -s | xclip -selection clipboard -t image/png
-
 bindsym $mod+shift+w exec maim ~/Pictures/Screenshots/$(date +%s).png
 
 bindsym $mod+shift+c exec --no-startup-id ocr
-
-#bindsym F9 exec --no-startup-id rofi -modi drun -show drun config ~/.config/rofi/rofidmenu.rasi
-
-## rofi bindings for window menu ($mod+t /F10 optional disabled)
-
-#bindsym $mod+t exec --no-startup-id rofi -show window config ~/.config/rofi/rofidmenu.rasi
-
-#bindsym F10 exec --no-startup-id rofi -show window config ~/.config/rofi/rofidmenu.rasi
 
 ## rofi bindings to manage clipboard (install rofi-greenclip from the AUR)
 exec --no-startup-id greenclip daemon>/dev/null
@@ -588,10 +493,4 @@ exec --no-startup-id x11vnc -display :0 -geometry 1920x1080 -forever -loop -noxd
 
 exec --no-startup-id sudo systemctl start docker
 
-bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -config ~/.config/rofi/rofidmenu.rasi
-
-# run kodi media server
-# exec --no-startup-id kodi
-
-# exec --no-startup-id sonobus --load-setup $HOME/Documents/sonobus/tablet_speaker &
 
