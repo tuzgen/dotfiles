@@ -1,0 +1,111 @@
+*
+
+!.gitignore
+
+!ricardo.jpg
+
+!.zshrc
+!.zprofile
+
+!.config/
+!.config/**
+
+.config/Android Open Source Project
+.config/Epic/Supraland/Saved/SaveGames
+.config/Google/AndroidStudio2023.2
+.config/JetBrains/IdeaIC2024.1
+.config/Ryujinx
+.config/ardour8
+.config/autostart
+.config/balena-etcher
+.config/balenaEtcher
+.config/cef_user_data/Dictionaries
+.config/cef_user_data/WidevineCdm
+.config/chezmoi
+.config/chromium
+.config/dconf
+.config/discord
+.config/dlv
+.config/github-copilot
+.config/go/telemetry/local
+.config/kde.org
+.config/kopanito
+.config/menus/applications-merged
+.config/nano
+.config/neofetch
+.config/noisetorch
+.config/obs-studio
+.config/pulse
+.config/qBittorrent
+.config/r2modman
+.config/r2modmanPlus-local
+.config/session
+.config/suyu
+.config/systemd/user
+.config/tenacity
+.config/transmission-daemon
+.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios
+.config/xarchiver
+.config/xed
+.config/xfce4
+.config/QtProject.conf
+.config/eos-update-notifier.first_init
+.config/example.picom.conf
+.config/kdenlive-layoutsrc
+.config/mimeapps.list
+.config/pavucontrol.ini
+.config/welcome.conf
+.config/kdenliverc
+.config/knfsshare
+.config/lazygit/state.yml
+
+.config/ErwinJr/
+.config/GIMP/
+.config/Mumble/
+.config/MusicBrainz/
+# .config/RSS Guard 4/
+.config/Thunar/renamerrc
+.config/baloofilerc
+# .config/beets/
+.config/cmus/
+.config/darkman/
+.config/darktable/
+.config/elisarc
+.config/ghb/
+.config/go/
+.config/godot/
+.config/gthumb/
+.config/gtk-2.0/
+.config/increpare games/
+.config/jamesdsp/
+.config/k9s/
+.config/kdeconnect/
+.config/kdeglobals
+.config/lastlog.txt
+.config/lazydocker/
+.config/libreoffice/
+# .config/mpd/
+# .config/ncmpcpp/
+.config/nitrogen/
+.config/picom/
+.config/pluginregistry.cfg
+.config/pluginsettings.cfg
+.config/qt5ct/
+.config/remmina/
+# .config/rofi/config.rasi
+# .config/sonobus/
+.config/spotify/
+.config/tenacity.cfg
+.config/tmux.lock
+.config/transg/
+.config/unity3d/
+.config/uv/
+.config/vesktop/
+.config/vlc/
+.config/xdg-desktop-portal/
+# .config/xsettingsd/
+.config/ymuse/
+
+.zsh_history
+
+.config/ncmpcpp/error.log
